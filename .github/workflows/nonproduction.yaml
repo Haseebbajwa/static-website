@@ -11,9 +11,9 @@ jobs:
     env:
       BUCKET_NAME: static-non-prod-360841
     steps:
-      - name: Check out code
+      - name: Checkout code
         uses: actions/checkout@v2
-      - name: Configure AWS CREDENTIAL
+      - name: configure aws cli
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -24,8 +24,8 @@ jobs:
         with:
           node-version: 14
       - name: build site
-        run: npm ci
-        run: npm run build
+        run: |
+          npm ci
+          npm run build
       - name: deploy files to bucket
-        run: aws s3 cp public ${{ env.BUCKET_NAME }}/ --recursive --acl public-read
-        
+        run: aws s3 cp public s3://${{ env.BUCKET_NAME }}/ --recursive --acl public-read
