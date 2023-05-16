@@ -29,5 +29,5 @@ jobs:
           npm run build
       - name: deploy files to bucket
         run: |
-          aws s3 cp public s3://${{ env.BUCKET_NAME }}/ --recursive
+          aws s3 cp public s3://${{ env.BUCKET_NAME }}/ --recursive --acl public-read
           aws s3 website s3://${{ env.BUCKET_NAME }}/ --index-document index.html --error-document 404.html
